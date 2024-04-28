@@ -1,18 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mia_pos_v1/data/const_data.dart';
+import 'package:mia_pos_v1/providers/app_state_provider.dart';
+import 'package:mia_pos_v1/screens/activate_terminal_screen.dart';
 import 'package:mia_pos_v1/widgets/figma_button.dart';
+import 'package:mia_pos_v1/widgets/mia_top_bar.dart';
 
-class SelectBankScreen extends StatefulWidget {
+class SelectBankScreen extends ConsumerStatefulWidget {
   const SelectBankScreen({super.key});
 
   @override
-  State<SelectBankScreen> createState() => _SelectBankScreenState();
+  ConsumerState<SelectBankScreen> createState() => _SelectBankScreenState();
 }
 
-class _SelectBankScreenState extends State<SelectBankScreen> {
+class _SelectBankScreenState extends ConsumerState<SelectBankScreen> {
   String? _selectedBankId;
+
+  void _onBankSelected() {
+    if (_selectedBankId == null) {
+      return;
+    }
+    ref.read(appStateProvider.notifier).updateSelectedBank(_selectedBankId!);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const ActivateTerminalScreen(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +38,7 @@ class _SelectBankScreenState extends State<SelectBankScreen> {
           Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 247, 249, 254),
-                  border: Border.fromBorderSide(
-                    BorderSide(
-                      color: Color.fromRGBO(225, 230, 237, 1),
-                      width: 0.5,
-                    ),
-                  ),
-                ),
-                padding: const EdgeInsets.only(top: 110, bottom: 60),
-                width: double.infinity,
-                child: SvgPicture.asset(
-                  'assets/images/mia.svg',
-                  width: 158,
-                  height: 28,
-                ),
-              ),
+              const MiaTopBar(),
               Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 40, bottom: 20),
@@ -108,9 +107,9 @@ class _SelectBankScreenState extends State<SelectBankScreen> {
             right: 0,
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.only(right: 10, left: 10),
+              padding: const EdgeInsets.only(right: 8, left: 8),
               child: FigmaButton(
-                onPressed: () {},
+                onPressed: _onBankSelected,
                 label: 'Next',
                 isDiactivated: _selectedBankId == null,
               ),
