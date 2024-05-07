@@ -22,6 +22,13 @@ class AppStateNotifier extends StateNotifier<AppState> {
       appState: state.appState,
     );
   }
+
+  void updateAppState(CurrentState appState) {
+    state = AppState(
+      selectedBank: state.selectedBank,
+      appState: appState,
+    );
+  }
 }
 
 final appStateProvider = StateNotifierProvider<AppStateNotifier, AppState>(

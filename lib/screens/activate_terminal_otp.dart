@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mia_pos_v1/providers/app_state_provider.dart';
 import 'package:mia_pos_v1/providers/dio_provider.dart';
+import 'package:mia_pos_v1/providers/secure_storage_provider.dart';
 import 'package:mia_pos_v1/widgets/helper.dart';
 import 'package:mia_pos_v1/widgets/mia_top_bar.dart';
 
@@ -30,7 +32,7 @@ class ActivateTerminalOtp extends ConsumerStatefulWidget {
 class _ActivateTerminalOtpState extends ConsumerState<ActivateTerminalOtp> {
   Timer? _timer;
   late int _secondsLeft;
-  bool _isLoading = true;
+  bool _isLoading = false;
   bool _isOtpError = false;
 
   @override
@@ -78,7 +80,7 @@ class _ActivateTerminalOtpState extends ConsumerState<ActivateTerminalOtp> {
         _isLoading = false;
       });
 
-      // TODO: show remaining attempts, show errors below otp 
+      // TODO: show remaining attempts, show errors below otp
 
       if (response.data == null) {
         showError(context, 'Error while confirming otp...');
@@ -101,6 +103,23 @@ class _ActivateTerminalOtpState extends ConsumerState<ActivateTerminalOtp> {
         context,
         'Success',
       );
+
+      ref.read(appStateProvider.notifier).updateAppState(CurrentState.login);
+
+      final secureStorage = ref.read(secureStorageProvider);
+      await secureStorage.write(
+        key: 'terminalActivationId',
+        value: widget.activationId,
+      );
+      await secureStorage.write(
+        key: 'selectedBankId',
+        value: ref.read(appStateProvider).selectedBank?.id,
+      );
+      await secureStorage.write(
+        key: 'appState',
+        value: CurrentState.login.toString(),
+      );
+
     } on DioException catch (ex) {
       setState(() {
         _isLoading = false;

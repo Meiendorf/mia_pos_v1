@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mia_pos_v1/providers/secure_storage_provider.dart';
 import 'package:mia_pos_v1/widgets/figma_button.dart';
 import 'package:mia_pos_v1/widgets/mia_top_bar.dart';
 
@@ -56,7 +57,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               margin: const EdgeInsets.only(top: 28),
               padding: const EdgeInsets.only(right: 8, left: 8),
               child: FigmaButton(
-                onPressed: () {},
+                onPressed: () async {
+                  print(await ref.read(secureStorageProvider).read(key: 'terminalActivationId'));
+                },
                 label: 'Enter',
                 isDiactivated: false,
               ),
