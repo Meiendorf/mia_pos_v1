@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mia_pos_v1/screens/activate_terminal_otp.dart';
+import 'package:mia_pos_v1/screens/active_terminal_screen.dart';
+import 'package:mia_pos_v1/screens/login_screen.dart';
 import 'package:mia_pos_v1/screens/select_bank_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -6,6 +9,6 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SelectBankScreen();
+    return const SelectBankScreen();
   }
 }

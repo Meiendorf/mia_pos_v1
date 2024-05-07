@@ -30,29 +30,30 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme: kColorScheme,
           indicatorColor: Colors.black87,
-          textSelectionTheme:
-              TextSelectionThemeData(selectionHandleColor: Colors.black54),
+          textSelectionTheme: const TextSelectionThemeData(
+              selectionHandleColor: Colors.black54),
           inputDecorationTheme: InputDecorationTheme().copyWith(
-            filled: true,
-            border: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: Color.fromRGBO(232, 230, 240, 1), width: 1),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: Color.fromRGBO(232, 230, 240, 1), width: 1),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: Color.fromRGBO(232, 230, 240, 1), width: 1),
-            ),
-            focusColor: Colors.blue,
-            fillColor: kColorScheme.secondaryContainer,
-            iconColor: Colors.blue,
-            hoverColor: Colors.blue,
-            labelStyle: TextStyle().copyWith(color: Color.fromRGBO(171, 169, 177, 1)),
-            floatingLabelStyle: TextStyle(color: Color.fromRGBO(171, 169, 177, 1))
-          ),
+              filled: true,
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: Color.fromRGBO(232, 230, 240, 1), width: 1),
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: Color.fromRGBO(232, 230, 240, 1), width: 1),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: Color.fromRGBO(232, 230, 240, 1), width: 1),
+              ),
+              focusColor: Colors.blue,
+              fillColor: kColorScheme.secondaryContainer,
+              iconColor: Colors.blue,
+              hoverColor: Colors.blue,
+              labelStyle: const TextStyle()
+                  .copyWith(color: Color.fromRGBO(171, 169, 177, 1)),
+              floatingLabelStyle:
+                  const TextStyle(color: Color.fromRGBO(171, 169, 177, 1))),
           useMaterial3: true,
           textTheme: GoogleFonts.onestTextTheme()),
       home: const MainScreen(),

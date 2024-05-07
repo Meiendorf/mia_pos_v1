@@ -4,16 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mia_pos_v1/widgets/figma_button.dart';
 import 'package:mia_pos_v1/widgets/mia_top_bar.dart';
 
-class ActivateTerminalScreen extends ConsumerStatefulWidget {
-  const ActivateTerminalScreen({super.key});
+class LoginScreen extends ConsumerStatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  ConsumerState<ActivateTerminalScreen> createState() =>
-      _ActivateTerminalScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _ActivateTerminalScreenState
-    extends ConsumerState<ActivateTerminalScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +25,7 @@ class _ActivateTerminalScreenState
               padding: const EdgeInsets.only(top: 40, bottom: 20),
               width: double.infinity,
               child: Text(
-                'Enter data about your terminal',
+                'Sign into your account',
                 style: GoogleFonts.onest(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
@@ -40,7 +38,7 @@ class _ActivateTerminalScreenState
                   cursorColor: Colors.black,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    labelText: 'IDNO',
+                    labelText: 'Login',
                   )),
             ),
             const SizedBox(height: 20),
@@ -50,7 +48,7 @@ class _ActivateTerminalScreenState
                   cursorColor: Colors.black,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    labelText: 'Terminal ID',
+                    labelText: 'Password',
                   )),
             ),
             Container(
@@ -59,7 +57,7 @@ class _ActivateTerminalScreenState
               padding: const EdgeInsets.only(right: 8, left: 8),
               child: FigmaButton(
                 onPressed: () {},
-                label: 'Next',
+                label: 'Enter',
                 isDiactivated: false,
               ),
             ),

@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+enum CurrentState { activation, login, authethicated, loading, error }
+
 class AppState {
   String? selectedBank;
-  bool isTerminalActivated;
-  bool isAuth;
+  CurrentState appState;
 
   AppState({
-    this.selectedBank = null,
-    this.isTerminalActivated = false,
-    this.isAuth = false,
+    this.selectedBank,
+    this.appState = CurrentState.activation,
   });
 }
 
@@ -18,26 +18,10 @@ class AppStateNotifier extends StateNotifier<AppState> {
   void updateSelectedBank(String selectedBank) {
     state = AppState(
       selectedBank: selectedBank,
-      isTerminalActivated: state.isTerminalActivated,
-      isAuth: state.isAuth,
-    );
-  }
-
-  void updateIsTerminalActivated(bool isTerminalActivated) {
-    state = AppState(
-      selectedBank: state.selectedBank,
-      isTerminalActivated: isTerminalActivated,
-      isAuth: state.isAuth,
-    );
-  }
-
-  void updateIsAuth(bool isAuth) {
-    state = AppState(
-      selectedBank: state.selectedBank,
-      isTerminalActivated: state.isTerminalActivated,
-      isAuth: isAuth,
+      appState: state.appState,
     );
   }
 }
 
-final appStateProvider = StateNotifierProvider<AppStateNotifier, AppState>((ref) => AppStateNotifier());
+final appStateProvider = StateNotifierProvider<AppStateNotifier, AppState>(
+    (ref) => AppStateNotifier());
