@@ -22,7 +22,10 @@ class _SelectBankScreenState extends ConsumerState<SelectBankScreen> {
     if (_selectedBankId == null) {
       return;
     }
-    // ref.read(appStateProvider.notifier).updateSelectedBank(_selectedBankId!);
+    
+    ref.read(appStateProvider.notifier).updateSelectedBank(
+        availableBanks.where((element) => element.id == _selectedBankId).first);
+
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => const ActivateTerminalScreen(),

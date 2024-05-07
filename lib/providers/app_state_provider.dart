@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mia_pos_v1/models/bank_option.dart';
 
 enum CurrentState { activation, login, authethicated, loading, error }
 
 class AppState {
-  String? selectedBank;
+  BankOption? selectedBank;
   CurrentState appState;
 
   AppState({
@@ -15,7 +16,7 @@ class AppState {
 class AppStateNotifier extends StateNotifier<AppState> {
   AppStateNotifier() : super(AppState());
 
-  void updateSelectedBank(String selectedBank) {
+  void updateSelectedBank(BankOption selectedBank) {
     state = AppState(
       selectedBank: selectedBank,
       appState: state.appState,

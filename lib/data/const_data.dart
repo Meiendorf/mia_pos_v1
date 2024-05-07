@@ -5,24 +5,24 @@ const availableBanks = [
     id: '1',
     imagePath: 'assets/images/banks/micb.png',
     name: 'MICB',
-    apiBaseUrl: 'someUrl',
+    apiBaseUrl: 'https://mia.redriverapps.net',
   ),
   BankOption(
     id: '2',
     imagePath: 'assets/images/banks/maib.png',
     name: 'MAIB',
-    apiBaseUrl: 'someUrl',
+    apiBaseUrl: 'https://mia.redriverapps.net',
   ),
   BankOption(
     id: '3',
     imagePath: 'assets/images/banks/victoria.png',
     name: 'VictoriaBank',
-    apiBaseUrl: 'someUrl',
+    apiBaseUrl: 'https://mia.redriverapps.net',
   ),
    BankOption(
     id: '4',
     imagePath: 'assets/images/banks/energ.png',
     name: 'Energbank',
-    apiBaseUrl: 'someUrl',
+    apiBaseUrl: 'https://mia.redriverapps.net',
   ),
 ];
