@@ -26,7 +26,7 @@ final authDioProvider = Provider<Dio>((ref) {
     onRequest: (options, handler) async {
       // Check if the access token is about to expire
       if (appState.expireTime != null &&
-          appState.expireTime!.difference(DateTime.now()).inSeconds <= 1000) {
+          appState.expireTime!.difference(DateTime.now()).inSeconds <= 10) {
         // Refresh token logic
         try {
           final response = await unauthDio.post('/pos/api/v1/seller/refresh', data: {
@@ -42,12 +42,12 @@ final authDioProvider = Provider<Dio>((ref) {
                   accessToken: null,
                   refreshToken: null,
                   expireTime: null,
-                  appState: CurrentState.login,
+                  appState: CurrentState.activation,
                 );
 
             return handler.reject(DioException(
               requestOptions: options,
-              error: 'Failed to refresh token...',
+              error: 'Failed to refresh token',
             ));
           }
 
@@ -68,7 +68,7 @@ final authDioProvider = Provider<Dio>((ref) {
                 accessToken: null,
                 refreshToken: null,
                 expireTime: null,
-                appState: CurrentState.login,
+                appState: CurrentState.activation,
               );
 
           return handler.reject(DioException(

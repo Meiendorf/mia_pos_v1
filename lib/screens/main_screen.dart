@@ -4,7 +4,6 @@ import 'package:mia_pos_v1/data/const_data.dart';
 import 'package:mia_pos_v1/models/bank_option.dart';
 import 'package:mia_pos_v1/providers/app_state_provider.dart';
 import 'package:mia_pos_v1/providers/secure_storage_provider.dart';
-import 'package:mia_pos_v1/screens/activate_terminal_otp.dart';
 import 'package:mia_pos_v1/screens/active_terminal_screen.dart';
 import 'package:mia_pos_v1/screens/loading_screen.dart';
 import 'package:mia_pos_v1/screens/login_screen.dart';
@@ -18,8 +17,6 @@ class MainScreen extends ConsumerStatefulWidget {
 }
 
 class _MainScreenState extends ConsumerState<MainScreen> {
-  String? _terminalActivationId;
-
   @override
   void initState() {
     super.initState();
@@ -60,10 +57,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       appState: currentState,
     );
 
-    setState(() {
-      _terminalActivationId = terminalActivationId;
-    });
-
     print(currentState);
     print(terminalActivationId);
     print(accessToken);
@@ -73,15 +66,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    CurrentState _currentState = ref.watch(appStateProvider).appState;
-    print(_currentState);
+    AppState mainAppState = ref.watch(appStateProvider);
+    print("MAIN BUILD!!!!, current state : ${mainAppState.appState}");
 
-    switch (_currentState) {
+    switch (mainAppState.appState) {
       case CurrentState.loading:
         return const LoadingScreen();
       case CurrentState.login:
         return LoginScreen(
-          terminalActivationId: _terminalActivationId!,
+          terminalActivationId: mainAppState.terminalActivationId!,
         );
       case CurrentState.authethicated:
         return ActiveTerminalScreen();

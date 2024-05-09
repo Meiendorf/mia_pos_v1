@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mia_pos_v1/providers/app_state_provider.dart';
 import 'package:mia_pos_v1/providers/dio_provider.dart';
 import 'package:mia_pos_v1/providers/secure_storage_provider.dart';
+import 'package:mia_pos_v1/screens/main_screen.dart';
 import 'package:mia_pos_v1/widgets/helper.dart';
 import 'package:mia_pos_v1/widgets/mia_top_bar.dart';
 
@@ -99,13 +100,10 @@ class _ActivateTerminalOtpState extends ConsumerState<ActivateTerminalOtp> {
       }
 
       print(response);
-      showError(
-        context,
-        'Success',
-      );
-
-      ref.read(appStateProvider.notifier).updateAppState(CurrentState.login);
-      ref.read(appStateProvider.notifier).updateTerminalActivationId(widget.activationId);
+      // showError(
+      //   context,
+      //   'Success',
+      // );
 
       final secureStorage = ref.read(secureStorageProvider);
       await secureStorage.write(
@@ -121,6 +119,15 @@ class _ActivateTerminalOtpState extends ConsumerState<ActivateTerminalOtp> {
         value: CurrentState.login.toString(),
       );
 
+      // ref.read(appStateProvider.notifier).updateAppState(CurrentState.login);
+      ref.read(appStateProvider.notifier).updateAppState(CurrentState.login);
+      ref.read(appStateProvider.notifier).updateTerminalActivationId(widget.activationId);
+      Navigator.of(context).popUntil((route) => false);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const MainScreen(),
+        ),
+      );
     } on DioException catch (ex) {
       setState(() {
         _isLoading = false;

@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mia_pos_v1/providers/app_state_provider.dart';
 import 'package:mia_pos_v1/providers/dio_provider.dart';
-import 'package:mia_pos_v1/providers/secure_storage_provider.dart';
 import 'package:mia_pos_v1/widgets/figma_button.dart';
 import 'package:mia_pos_v1/widgets/helper.dart';
 import 'package:mia_pos_v1/widgets/mia_top_bar.dart';

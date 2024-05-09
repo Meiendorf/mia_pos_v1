@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mia_pos_v1/providers/app_state_provider.dart';
 import 'package:mia_pos_v1/providers/dio_provider.dart';
-import 'package:mia_pos_v1/providers/secure_storage_provider.dart';
 
 class ActiveTerminalScreen extends ConsumerStatefulWidget {
   const ActiveTerminalScreen({super.key});
