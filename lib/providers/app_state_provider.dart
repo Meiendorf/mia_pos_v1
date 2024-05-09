@@ -10,6 +10,7 @@ class AppState {
   String? accessToken;
   String? refreshToken;
   DateTime? expireTime;
+  String? terminalActivationId;
 
   AppState({
     this.selectedBank,
@@ -17,6 +18,7 @@ class AppState {
     this.accessToken,
     this.refreshToken,
     this.expireTime,
+    this.terminalActivationId,
   });
 }
 
@@ -32,16 +34,34 @@ class AppStateNotifier extends StateNotifier<AppState> {
       accessToken: state.accessToken,
       refreshToken: state.refreshToken,
       expireTime: state.expireTime,
+      terminalActivationId: state.terminalActivationId,
     );
   }
 
-  void updateAppState(CurrentState appState) {
+  void updateTerminalActivationId(String? terminalActivationId) {
+    state = AppState(
+      selectedBank: state.selectedBank,
+      appState: state.appState,
+      accessToken: state.accessToken,
+      refreshToken: state.refreshToken,
+      expireTime: state.expireTime,
+      terminalActivationId: terminalActivationId,
+    );
+  }
+
+  void updateAppState(CurrentState appState) async {
     state = AppState(
       selectedBank: state.selectedBank,
       appState: appState,
       accessToken: state.accessToken,
       refreshToken: state.refreshToken,
       expireTime: state.expireTime,
+      terminalActivationId: state.terminalActivationId,
+    );
+    final secureStorage = ref.read(secureStorageProvider);
+    await secureStorage.write(
+      key: "appState",
+      value: appState.toString(),
     );
   }
 
@@ -57,24 +77,25 @@ class AppStateNotifier extends StateNotifier<AppState> {
       accessToken: accessToken,
       refreshToken: refreshToken,
       expireTime: expireTime,
+      terminalActivationId: state.terminalActivationId,
     );
 
     final secureStorage = ref.read(secureStorageProvider);
-    secureStorage.write(
+    await secureStorage.write(
       key: "accessToken",
       value: accessToken,
     );
-    secureStorage.write(
+    await secureStorage.write(
       key: "refreshToken",
       value: refreshToken,
     );
-    secureStorage.write(
+    await secureStorage.write(
       key: "expireTime",
       value: expireTime?.toIso8601String(),
     );
-    secureStorage.write(
+    await secureStorage.write(
       key: "appState",
-      value: CurrentState.authethicated.toString(),
+      value: appState.toString(),
     );
   }
 }

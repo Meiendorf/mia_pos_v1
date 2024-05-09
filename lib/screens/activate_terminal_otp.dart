@@ -105,6 +105,7 @@ class _ActivateTerminalOtpState extends ConsumerState<ActivateTerminalOtp> {
       );
 
       ref.read(appStateProvider.notifier).updateAppState(CurrentState.login);
+      ref.read(appStateProvider.notifier).updateTerminalActivationId(widget.activationId);
 
       final secureStorage = ref.read(secureStorageProvider);
       await secureStorage.write(

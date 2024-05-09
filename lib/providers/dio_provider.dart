@@ -7,8 +7,82 @@ final dioProvider = Provider<Dio>((ref) {
   final dio = Dio();
 
   // Configure Dio based on appState
-  dio.options.baseUrl =
-      appState.selectedBank == null ? "" : appState.selectedBank!.apiBaseUrl;
+  dio.options.baseUrl = appState.selectedBank?.apiBaseUrl ?? "";
+
+  return dio;
+});
+
+final authDioProvider = Provider<Dio>((ref) {
+  final appState = ref.watch(appStateProvider);
+  final unauthDio = ref.read(dioProvider);
+  final dio = Dio();
+
+  // Configure Dio based on appState
+  dio.options.baseUrl = appState.selectedBank?.apiBaseUrl ?? "";
+  String? finalAccessToken = appState.accessToken;
+
+  // Add refresh token and access token interceptors
+  dio.interceptors.add(InterceptorsWrapper(
+    onRequest: (options, handler) async {
+      // Check if the access token is about to expire
+      if (appState.expireTime != null &&
+          appState.expireTime!.difference(DateTime.now()).inSeconds <= 1000) {
+        // Refresh token logic
+        try {
+          final response = await unauthDio.post('/pos/api/v1/seller/refresh', data: {
+            'refreshToken': appState.refreshToken,
+            'terminalActivationId': appState.terminalActivationId,
+          });
+
+          if (response.data == null || response.data['result'] != 'success') {
+            print(
+                'Error while refreshing token in interceptor : ${response.data}');
+
+            ref.read(appStateProvider.notifier).updateTokens(
+                  accessToken: null,
+                  refreshToken: null,
+                  expireTime: null,
+                  appState: CurrentState.login,
+                );
+
+            return handler.reject(DioException(
+              requestOptions: options,
+              error: 'Failed to refresh token...',
+            ));
+          }
+
+          final tokens = response.data['authTokens'];
+          int expiresIn = tokens['accessTokenExpiresIn'];
+          finalAccessToken = tokens['accessToken'];
+
+          ref.read(appStateProvider.notifier).updateTokens(
+                accessToken: tokens['accessToken'],
+                refreshToken: tokens['refreshToken'],
+                expireTime: DateTime.now().add(Duration(seconds: expiresIn)),
+                appState: CurrentState.authethicated,
+              );
+          // print("Tokens refreshed!");
+        } catch (e) {
+          // Handle refresh token failure
+          ref.read(appStateProvider.notifier).updateTokens(
+                accessToken: null,
+                refreshToken: null,
+                expireTime: null,
+                appState: CurrentState.login,
+              );
+
+          return handler.reject(DioException(
+            requestOptions: options,
+            error: 'Failed to refresh token',
+          ));
+        }
+      }
+
+      // Add Auth header with access token
+      options.headers['Authorization'] = 'Bearer $finalAccessToken';
+      handler.next(options);
+    },
+  ));
 
   return dio;
 });

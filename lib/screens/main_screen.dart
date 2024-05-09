@@ -51,7 +51,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             .where((element) => element.toString() == appState)
             .first;
 
-    // appStateProviderNotifier.updateAppState(currentState);
+    appStateProviderNotifier.updateTerminalActivationId(terminalActivationId);
     appStateProviderNotifier.updateSelectedBank(currentBank);
     appStateProviderNotifier.updateTokens(
       accessToken: accessToken,

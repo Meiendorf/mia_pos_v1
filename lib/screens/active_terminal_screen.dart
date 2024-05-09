@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mia_pos_v1/providers/app_state_provider.dart';
+import 'package:mia_pos_v1/providers/dio_provider.dart';
 import 'package:mia_pos_v1/providers/secure_storage_provider.dart';
 
 class ActiveTerminalScreen extends ConsumerStatefulWidget {
@@ -27,7 +28,10 @@ class _ActiveTerminalScreenState extends ConsumerState<ActiveTerminalScreen> {
           const Text('Terminal activated!'),
           TextButton(
             onPressed: () async {
-              await ref.read(secureStorageProvider).write(key: 'appState', value: CurrentState.login.toString());
+              // await ref.read(secureStorageProvider).write(key: 'appState', value: CurrentState.login.toString());
+              final response = await ref.read(authDioProvider).get('/pos/api/v1/shift/check');
+              print(response.data);
+              print('hellloo');
             },
             child: Text('Tap me'),
           )
