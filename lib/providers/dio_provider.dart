@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mia_pos_v1/main.dart';
 import 'package:mia_pos_v1/providers/app_state_provider.dart';
 
 final dioProvider = Provider<Dio>((ref) {
@@ -45,6 +47,7 @@ final authDioProvider = Provider<Dio>((ref) {
                   appState: CurrentState.activation,
                 );
 
+            showErrorDialog('Your session has expired.');
             return handler.reject(DioException(
               requestOptions: options,
               error: 'Failed to refresh token',
@@ -70,7 +73,7 @@ final authDioProvider = Provider<Dio>((ref) {
                 expireTime: null,
                 appState: CurrentState.activation,
               );
-
+          showErrorDialog('Your session has expired.');
           return handler.reject(DioException(
             requestOptions: options,
             error: 'Failed to refresh token',
@@ -86,3 +89,19 @@ final authDioProvider = Provider<Dio>((ref) {
 
   return dio;
 });
+
+void showErrorDialog(String message) {
+    showDialog(
+      context: NavigationService.navigatorKey.currentContext!,
+      builder: (context) => AlertDialog(
+        title: Text("Error"),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text("OK"),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+  }

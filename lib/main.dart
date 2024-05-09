@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      navigatorKey: NavigationService.navigatorKey,
       theme: ThemeData(
           colorScheme: kColorScheme,
           indicatorColor: Colors.black87,
@@ -59,4 +60,9 @@ class MyApp extends StatelessWidget {
       home: const MainScreen(),
     );
   }
+}
+
+class NavigationService { 
+  static GlobalKey<NavigatorState> navigatorKey = 
+  GlobalKey<NavigatorState>();
 }
