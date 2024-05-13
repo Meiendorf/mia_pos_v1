@@ -4,7 +4,7 @@ import 'package:mia_pos_v1/data/const_data.dart';
 import 'package:mia_pos_v1/models/bank_option.dart';
 import 'package:mia_pos_v1/providers/app_state_provider.dart';
 import 'package:mia_pos_v1/providers/secure_storage_provider.dart';
-import 'package:mia_pos_v1/screens/active_terminal_screen.dart';
+import 'package:mia_pos_v1/terminal_flow/active_terminal_screen.dart';
 import 'package:mia_pos_v1/screens/loading_screen.dart';
 import 'package:mia_pos_v1/screens/login_screen.dart';
 import 'package:mia_pos_v1/screens/select_bank_screen.dart';

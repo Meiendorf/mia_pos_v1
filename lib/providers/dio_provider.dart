@@ -31,7 +31,8 @@ final authDioProvider = Provider<Dio>((ref) {
           appState.expireTime!.difference(DateTime.now()).inSeconds <= 10) {
         // Refresh token logic
         try {
-          final response = await unauthDio.post('/pos/api/v1/seller/refresh', data: {
+          final response =
+              await unauthDio.post('/pos/api/v1/seller/refresh', data: {
             'refreshToken': appState.refreshToken,
             'terminalActivationId': appState.terminalActivationId,
           });
@@ -91,17 +92,17 @@ final authDioProvider = Provider<Dio>((ref) {
 });
 
 void showErrorDialog(String message) {
-    showDialog(
-      context: NavigationService.navigatorKey.currentContext!,
-      builder: (context) => AlertDialog(
-        title: Text("Error"),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: Text("OK"),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
-    );
-  }
+  showDialog(
+    context: NavigationService.navigatorKey.currentContext!,
+    builder: (context) => AlertDialog(
+      title: const Text("Error"),
+      content: Text(message),
+      actions: <Widget>[
+        TextButton(
+          child: const Text("OK"),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ],
+    ),
+  );
+}

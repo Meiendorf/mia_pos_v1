@@ -74,6 +74,9 @@ flutter:
     - assets/images/banks/energ.png
     - assets/images/mia.svg
     - assets/images/checkmark.svg
+    - assets/images/terminal_icon.svg
+    - assets/images/tx_icon.svg
+    - assets/images/profile_tab_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
